@@ -3,16 +3,6 @@ PHP utilities to use with geolocation
 
 ## Usage
 
-### Composer
-
-Within your `vendor` directory, create a directory called `MMannes` and inside it clone this repository with `git clone https://github.com/mmannes/LatLng.git`.
-
-### Manually
-
-Clone this repository with `git clone https://github.com/mmannes/LatLng.git` inside your working directory and include the `LatLng.php` file manually.
-
-## Example
-
 ```php
 <?php
 
