@@ -1,5 +1,9 @@
 <?php
 namespace MMannes;
+/**
+ * @property-read float $lat
+ * @property-read float $lng
+ */
 class LatLng {
 
     private $lat;
@@ -41,4 +45,34 @@ class LatLng {
       
         return $distance;
     }
+
+    /**
+	 * Determines whether a given LatLng is in a fence of LatLngs
+	 * @param LatLng $point
+	 * @param LatLng[] $fence
+	 * @return bool
+	 */
+	public static function pointInFence(LatLng $point, $fence) {
+		$polyCorners = count($fence);
+		$polyX = array();
+		$polyY = array();
+		foreach($fence as $corner) {
+			$polyX[] = (float) $corner->lng;
+			$polyY[] = (float) $corner->lat;
+		}
+		$x = $point->lng;
+		$y = $point->lat;
+		$j = $polyCorners - 1;
+		$oddNodes = false;
+		for($i = 0; $i < $polyCorners; $i++) {
+			if($polyY[$i] < $y && $polyY[$j] >= $y  ||  $polyY[$j] < $y && $polyY[$i] >= $y) {
+				if ($polyX[$i] + ($y - $polyY[$i]) / ($polyY[$j] - $polyY[$i]) * ($polyX[$j] - $polyX[$i]) < $x) {
+					$oddNodes = !$oddNodes; 
+				}
+			}
+			$j = $i;
+		}
+		return $oddNodes;
+	}
+
 }
