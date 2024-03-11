@@ -40,9 +40,13 @@ class LatLng {
 
         $distance = acos(
                 sin($lat_from_rad) * sin($lat_to_rad) + 
-                cos($lat_from_rad) * cos($lat_to_rad) * cos($lng_to_rad-$lng_from_rad)
+                cos($lat_from_rad) * cos($lat_to_rad) * cos($lng_to_rad - $lng_from_rad)
             ) * $earth_radius;
-      
+
+        if (is_nan($distance)) {
+            // When two points are too close acos() receives 1 and it is NAN
+            $distance = 0;
+        }
         return $distance;
     }
 
